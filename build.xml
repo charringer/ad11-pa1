@@ -1,0 +1,13 @@
+<project default='all'>
+  <target name='build'>
+    <mkdir dir='build'/>
+    <javac srcdir='src' destdir='build' source='1.6' target='1.6'
+      includeantruntime='no' deprecation='yes' debug='yes'>
+      <compilerarg value="-Xlint"/>
+    </javac>
+  </target>
+
+  <target name='clean'>
+    <delete dir='build'/>
+  </target>
+</project>
