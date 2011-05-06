@@ -39,11 +39,11 @@ public class Sorter {
 	 * @return erstes Element der Liste
 	 */
 	protected ListElement acyclicSinglyLinked(DoublyLinkedList in) {
-		System.out.println("make acyclicSinglyLinked");
+		//System.out.println("make acyclicSinglyLinked");
 
 		ListElement current = in.first;
 		while (current.next != in.first) {
-			System.out.println("original "+current);
+			//System.out.println("original "+current);
 			current.prev = null;
 			current = current.next;
 		}
@@ -60,14 +60,15 @@ public class Sorter {
 	 * @return list
 	 */
 	protected DoublyLinkedList cyclicDoublyLinked(DoublyLinkedList list, ListElement first) {
-		System.out.println("make cyclicDoublyLinked");
+		//System.out.println("make cyclicDoublyLinked");
 
 		ListElement current = first;
 		while (current.next != null) {
-			System.out.println("final "+current);
+			//System.out.println("final "+current);
 			current.next.prev = current;
 			current = current.next;
 		}
+		//System.out.println("final "+current);
 		current.next = first;
 		first.prev = current;
 
@@ -83,20 +84,20 @@ public class Sorter {
 	 * @return erstes Element der sortierten Liste
 	 */
 	protected ListElement mergesort_intern(ListElement list, int numOfElements) {
-		System.out.println("mergesort("+list2string(list)+")");
+		//System.out.println("mergesort("+list2string(list)+")");
 		if (numOfElements < 2)
 			return list;
 
 		ListElement l1, l2;
 		int len1 = numOfElements/2;
 		int len2 = numOfElements - len1;
-		System.out.println("splitting in "+len1+" and "+len2);
+		//System.out.println("splitting in "+len1+" and "+len2);
 
 		l2 = split(list, len1);
 		l1 = list;
 
-		mergesort_intern(l1, len1);
-		mergesort_intern(l2, len2);
+		l1 = mergesort_intern(l1, len1);
+		l2 = mergesort_intern(l2, len2);
 
 		return merge(l1, l2);
 	}
@@ -127,7 +128,7 @@ public class Sorter {
 	 * @return erstes Element der zusammengeführten Liste
 	 */
 	protected ListElement merge(ListElement a, ListElement b) {
-		System.out.println("merge("+list2string(a)+","+list2string(b)+")");
+		//System.out.println("merge("+list2string(a)+","+list2string(b)+")");
 
 		ListElement current = null;
 		if (a.getKey() <= b.getKey()) {
@@ -137,11 +138,11 @@ public class Sorter {
 			current = b;
 			b = b.next;
 		}
-		System.out.println("merge "+current);
+		//System.out.println("merge "+current);
 		ListElement first = current;
 
 		while (a != null || b != null) {
-			if (a.getKey() <= b.getKey() || b == null) {
+			if (b == null || (a!= null && a.getKey() <= b.getKey())) {
 				current.next = a;
 				a = a.next;
 			} else {
@@ -149,9 +150,10 @@ public class Sorter {
 				b = b.next;
 			}
 			current = current.next;
-			System.out.println("merge "+current);
+			//System.out.println("merge "+current);
 		}
 
+		//System.out.println("result of merge: "+list2string(first));
 		return first;
 	}
 
