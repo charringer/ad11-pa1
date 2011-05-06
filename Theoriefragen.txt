@@ -1,0 +1,14 @@
+== Stabil?
+Ja.
+
+== Abänderung für einfach verkettete zyklische Liste?
+Siehe git commits.
+
+== Abänderung für einfach verkettete azyklische Liste?
+Gar nicht.
+
+== Speicherverbrauch?
+Theta(n)
+
+== Worst case, best case?
+worst case = best case
