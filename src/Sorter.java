@@ -25,11 +25,10 @@ public class Sorter {
 	 * @return Sortierte Eingabefolge
 	 */
 	public DoublyLinkedList mergesort(DoublyLinkedList in, int numOfElements) {
-		System.out.println("Yeah, starting to sort.");
 		ListElement first = acyclicSinglyLinked(in);
-		System.out.println("Killed the cycle.");
+
 		first = mergesort_intern(first, numOfElements);
-		System.out.println("Wohoo, almost finished.");
+
 		return cyclicDoublyLinked(in, first);
 	}
 
@@ -40,10 +39,11 @@ public class Sorter {
 	 * @return erstes Element der Liste
 	 */
 	protected ListElement acyclicSinglyLinked(DoublyLinkedList in) {
-		System.out.println("acyclicSinglyLinked()");
+		System.out.println("make acyclicSinglyLinked");
 
 		ListElement current = in.first;
 		while (current.next != in.first) {
+			System.out.println("original "+current);
 			current.prev = null;
 			current = current.next;
 		}
@@ -60,10 +60,11 @@ public class Sorter {
 	 * @return list
 	 */
 	protected DoublyLinkedList cyclicDoublyLinked(DoublyLinkedList list, ListElement first) {
-		System.out.println("cyclicDoublyLinked()");
+		System.out.println("make cyclicDoublyLinked");
 
 		ListElement current = first;
 		while (current.next != null) {
+			System.out.println("final "+current);
 			current.next.prev = current;
 			current = current.next;
 		}
@@ -82,7 +83,7 @@ public class Sorter {
 	 * @return erstes Element der sortierten Liste
 	 */
 	protected ListElement mergesort_intern(ListElement list, int numOfElements) {
-		System.out.println("mergesort for "+numOfElements);
+		System.out.println("mergesort("+list2string(list)+")");
 		if (numOfElements < 2)
 			return list;
 
@@ -108,7 +109,6 @@ public class Sorter {
 	 * @return erstes Element des abgespaltenen hinteren Teils der Liste
 	 */
 	protected ListElement split(ListElement list, int skip) {
-		System.out.println("split(), and skipping "+skip);
 		ListElement endOfFirst = list;
 		for (int i = 0; i < skip-1; i++) {
 			endOfFirst = endOfFirst.next;
@@ -127,7 +127,7 @@ public class Sorter {
 	 * @return erstes Element der zusammengeführten Liste
 	 */
 	protected ListElement merge(ListElement a, ListElement b) {
-		System.out.println("merge()");
+		System.out.println("merge("+list2string(a)+","+list2string(b)+")");
 
 		ListElement current = null;
 		if (a.getKey() <= b.getKey()) {
@@ -137,10 +137,10 @@ public class Sorter {
 			current = b;
 			b = b.next;
 		}
+		System.out.println("merge "+current);
 		ListElement first = current;
 
 		while (a != null || b != null) {
-			System.out.println("dub");
 			if (a.getKey() <= b.getKey() || b == null) {
 				current.next = a;
 				a = a.next;
@@ -149,8 +149,29 @@ public class Sorter {
 				b = b.next;
 			}
 			current = current.next;
+			System.out.println("merge "+current);
 		}
 
 		return first;
+	}
+
+	/**
+	 * Liste anzeigen.
+	 *
+	 * @param first erstes Element einer zyklischen oder azyklischen Liste, &ne; null
+	 */
+	protected String list2string(ListElement first) {
+		if (first == null) {
+			return "<>";
+		} else  {
+			String output = "<"+first;
+			ListElement current = first.next;
+			while (current != null && current != first) {
+				output += " "+current;
+				current = current.next;
+			}
+			output+=">";
+			return output;
+		}
 	}
 }
