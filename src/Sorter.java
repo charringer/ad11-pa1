@@ -47,6 +47,7 @@ public class Sorter {
 			current.prev = null;
 			current = current.next;
 		}
+		//System.out.println("original "+current);
 		current.prev = null;
 		current.next = null;
 		return in.first;
