@@ -63,8 +63,9 @@ public class Sorter {
 		System.out.println("cyclicDoublyLinked()");
 
 		ListElement current = first;
-		while (current.next != first && current.next != null) {
+		while (current.next != null) {
 			current.next.prev = current;
+			current = current.next;
 		}
 		current.next = first;
 		first.prev = current;
