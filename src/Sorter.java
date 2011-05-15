@@ -19,32 +19,28 @@ public class Sorter {
 
 	/**
 	 * MergeSort Implementierung
+	 *
+	 * Wir nehmen zur Kenntnis:
+	 * <ol>
+	 * <li>Das st&auml;ndige Umbiegen von zwei Zeigern ist
+	 * gef&auml;hrlicher und fehleranf&auml;lliger als das st&auml;ndige
+	 * Umbiegen von nur einem Zeiger.</li>
+	 * <li>Bei der Implementierung des MergeSort-Algorithmus bietet eine
+	 * doppelt verkettete Listenstruktur im Vergleich zu einer einfach
+	 * verketteten keine Vorteile.</li>
+	 * </ol>
+	 *
+	 * Also vereinfachen wir die Implementierung dadurch, dass wir nur die
+	 * Verkettung in eine Richtung beachten und bearbeiten. Am Ende stellen
+	 * wir die doppelte Verkettung wieder sicher.
 	 * 
 	 * @param in Unsortierte Eingabefolge
 	 * @param numOfElements Gr&ouml;&szlig;e der Eingabefolge 
 	 * @return Sortierte Eingabefolge
 	 */
 	public DoublyLinkedList mergesort(DoublyLinkedList in, int numOfElements) {
-		ListElement first = cyclicSinglyLinked(in);
-		first = mergesort_intern(first, numOfElements);
+		ListElement first = mergesort_intern(in.first, numOfElements);
 		return cyclicDoublyLinked(in, first);
-	}
-
-	/**
-	 * Wandelt in eine zyklische einfach verkettete Liste um.
-	 *
-	 * @param in zyklische doppelt verkettete Liste
-	 * @return erstes Element der Liste
-	 */
-	protected ListElement cyclicSinglyLinked(DoublyLinkedList in) {
-		ListElement current = in.first;
-		while (current.next != in.first) {
-			current.prev = null;
-			current = current.next;
-		}
-		current.prev = null;
-		current.next = in.first;
-		return in.first;
 	}
 
 	/**
